@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <style>
+    :root {
+      --primary: #007bff;
+      --text: #333;
+      --border: #ccc;
+      --radius: 8px;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      width: 100%;
+      max-width: 400px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background-color: #f8f8f8;
+      font-size: 14px;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary);
+      background-color: #fff;
+      outline: none;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px;
+      background-color: var(--primary);
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin: -10px 0 10px;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <form class="form" th:action="@{/register}" th:object="${user1}" method="post">
+    <h2>Register</h2>
+
+    <div th:if="${registerError}" th:text="${registerError}" class="error"></div>
+
+    <label>Username</label>
+    <input type="text" th:field="*{username}">
+    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
+
+    <label>Email</label>
+    <input type="email" th:field="*{email}">
+    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></div>
+
+    <label>Password</label>
+    <input type="password" th:field="*{password}">
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
+
+    <label>Confirm Password</label>
+    <input type="password" th:field="*{cpassword}">
+    <div th:if="${#fields.hasErrors('cpassword')}" th:errors="*{cpassword}" class="error"></div>
+
+    <label>Role</label>
+    <select th:field="*{roles}">
+      <option value="ROLE_USER">User</option>
+    </select>
+    <div th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" class="error"></div>
+
+    <button class="btn" type="submit">Register</button>
+  </form>
+
+  <p>Already registered? <a th:href="@{/login}">Login</a></p>
+</div>
+
+</body>
+</html>
